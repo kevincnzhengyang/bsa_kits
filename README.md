@@ -23,7 +23,6 @@ pip install adafruit-ampy
 
 ``` Shell
 # install remote controller
-ampy --port /dev/ttyUSB0 put controller/mp_button.py
 ampy --port /dev/ttyUSB0 put controller/boot.py
 
 # install remote controller
