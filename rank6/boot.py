@@ -5,8 +5,8 @@
 * @Author      : kevin.z.y <kevin.cn.zhengyang@gmail.com>
 * @Date        : 2024-04-24 11:28:40
 * @LastEditors : kevin.z.y <kevin.cn.zhengyang@gmail.com>
-* @LastEditTime: 2024-04-25 23:21:34
-* @FilePath    : /hello_world/home/kevin/esp/micropython/bsa_kits/rank6/boot.py
+* @LastEditTime: 2024-05-03 00:09:11
+* @FilePath    : /bsa_kits/rank6/boot.py
 * @Description : rank 6
 * @Copyright (c) 2024 by Zheng, Yang, All Rights Reserved.
 '''
@@ -40,11 +40,15 @@ class Rank6(object):
 class Node(object):
     HEARTBEAT_PERIOD = 0.5
 
-    def __init__(self, host_mac: bytes, light: object) -> object:
+    def __init__(self, host_mac: bytes, light: object,
+                 pin_status: int) -> object:
         self.host_mac = host_mac
         self.dev = None             # device for ESP NOW
         self.seq = 0                # sequence
         self.light = light
+        self.flag = False           # flag for statug LED
+        self.pin = Pin(pin_status, mode = Pin.OUT)
+        self.hb_count = 0
 
     def preamble(self) -> None:
         # prepare ESP-NOW
@@ -69,6 +73,10 @@ class Node(object):
         while True:
             if not await self.dev.asend(self.host_mac, self.seq.to_bytes(1, 'big')):
                 print("Heartbeat Lost")
+            self.hb_count += 1
+            if 0 == self.hb_count % 4:
+                self.flag = not self.flag
+                self.pin.value(self.flag)
             await asyncio.sleep(Node.HEARTBEAT_PERIOD)
 
     async def recv_cmd(self) -> None:
@@ -84,7 +92,7 @@ async def main() -> None:
     print(f"stage4 init")
     rank6 = Rank6(16, 17, 18, 19, 22, 23)
     print(f"node init")
-    node = Node(b'\x40\x22\xd8\xea\x9f\x88', rank6)
+    node = Node(b'\x40\x22\xd8\xea\x9f\x88', rank6, 33)
     print(f"preamble")
     node.preamble()
     print(f"task send hb")
