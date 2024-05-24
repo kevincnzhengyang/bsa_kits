@@ -5,7 +5,7 @@
 * @Author      : kevin.z.y <kevin.cn.zhengyang@gmail.com>
 * @Date        : 2024-04-24 11:28:40
 * @LastEditors : kevin.z.y <kevin.cn.zhengyang@gmail.com>
-* @LastEditTime: 2024-05-03 00:16:41
+* @LastEditTime: 2024-05-08 10:51:41
 * @FilePath    : /bsa_kits/stage4/boot.py
 * @Description : stage 4
 * @Copyright (c) 2024 by Zheng, Yang, All Rights Reserved.
@@ -83,12 +83,12 @@ class Node(object):
             print(f"from [{mac}: {msg}]")
             self.seq = int.from_bytes(msg, 'big')
             self.light.handle_cmd(self.seq)
-        print("recv heartbeat finish")
+        print("recv cmd finish")
 
 
 async def main() -> None:
     print(f"stage4 init")
-    stage4 = Stage4(18, 19, 22, 23)
+    stage4 = Stage4(23, 22, 19, 18)
     print(f"node init")
     node = Node(b'\x40\x22\xd8\xea\x9f\x88', stage4, 33)
     print(f"preamble")

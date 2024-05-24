@@ -5,7 +5,7 @@
 * @Author      : kevin.z.y <kevin.cn.zhengyang@gmail.com>
 * @Date        : 2024-04-24 11:28:40
 * @LastEditors : kevin.z.y <kevin.cn.zhengyang@gmail.com>
-* @LastEditTime: 2024-05-03 00:09:11
+* @LastEditTime: 2024-05-03 16:56:46
 * @FilePath    : /bsa_kits/rank6/boot.py
 * @Description : rank 6
 * @Copyright (c) 2024 by Zheng, Yang, All Rights Reserved.
@@ -30,9 +30,11 @@ class Rank6(object):
 
     def handle_cmd(self, seq: int) -> None:
         if Rank6.LIGHT_COUNT < seq:
+            print("turn off all")
             for pin in self.pins:
                 pin.value(False)
         else:
+            print(f"turn on to {seq}")
             for i in range(seq):
                 self.pins[i].value(True)
 
@@ -85,7 +87,7 @@ class Node(object):
             print(f"from [{mac}: {msg}]")
             self.seq = int.from_bytes(msg, 'big')
             self.light.handle_cmd(self.seq)
-        print("recv heartbeat finish")
+        print("recv cmd finish")
 
 
 async def main() -> None:

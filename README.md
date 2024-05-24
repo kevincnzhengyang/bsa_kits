@@ -30,4 +30,7 @@ ampy --port /dev/ttyUSB0 put rank6/boot.py
 
 # install remote controller
 ampy --port /dev/ttyUSB0 put stage4/boot.py
+
+# monitor
+screen /dev/ttyUSB0
 ```

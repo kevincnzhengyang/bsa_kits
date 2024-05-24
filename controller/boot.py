@@ -5,8 +5,8 @@
 * @Author      : kevin.z.y <kevin.cn.zhengyang@gmail.com>
 * @Date        : 2024-04-24 11:28:40
 * @LastEditors : kevin.z.y <kevin.cn.zhengyang@gmail.com>
-* @LastEditTime: 2024-04-25 23:16:59
-* @FilePath    : /hello_world/home/kevin/esp/micropython/bsa_kits/controller/boot.py
+* @LastEditTime: 2024-05-03 20:36:43
+* @FilePath    : /bsa_kits/controller/boot.py
 * @Description : controller
 * @Copyright (c) 2024 by Zheng, Yang, All Rights Reserved.
 '''
@@ -174,7 +174,7 @@ async def main() -> None:
     print(f"peer stage4 init")
     peer_stage4 = Peer(4, b"\x40\x22\xd8\xef\x09\x7c", 18, 19, 16)
     print(f"peer rank 4 init")
-    peer_rank6 = Peer(6, b"\x40\x22\xd8\xea\x7d\xe4", 22, 23, 17)
+    peer_rank6 = Peer(6, b"\x40\x22\xd8\xea\x7d\xe4", 26, 27, 32)
     print(f"controller init")
     controller = Controller(peer_stage4, peer_rank6)
     print(f"preamble")
